@@ -24,11 +24,11 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
     @FXML
-    private Label welcomeText;
+    public Label welcomeText;
     @FXML
-    private TextField tfUsername;
+    public TextField tfUsername;
     @FXML
-    private PasswordField pfPassword;
+    public PasswordField pfPassword;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

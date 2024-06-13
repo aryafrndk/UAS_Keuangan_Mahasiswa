@@ -1,8 +1,26 @@
-package com.example.keuanganmahasiswa;
+package com.example.keuanganmahasiswa.test;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+
+import com.example.keuanganmahasiswa.DatabaseConnection;
+import com.example.keuanganmahasiswa.RuntimeConfiguration;
+import com.example.keuanganmahasiswa.controller.LoginController;
+import com.example.keuanganmahasiswa.controller.RegisterController;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+
+import com.example.keuanganmahasiswa.DatabaseConnection;
+import com.example.keuanganmahasiswa.RuntimeConfiguration;
+import com.example.keuanganmahasiswa.controller.LoginController;
+import com.example.keuanganmahasiswa.controller.RegisterController;
+import com.example.keuanganmahasiswa.controller.ReportController;
+
 import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -34,8 +52,10 @@ public class LoginControllerTest {
         loginController.tfUsername = new TextField();
         loginController.pfPassword = new PasswordField();
     }
+  
     @BeforeEach
     public void setUpregister() {
+        MockitoAnnotations.initMocks(this);
         registerController = new RegisterController();
         registerController.tfNIM = new TextField();
         registerController.tfNama = new TextField();
@@ -98,9 +118,7 @@ public class LoginControllerTest {
     public void testToLogin() {
         ActionEvent event = Mockito.mock(ActionEvent.class);
         registerController.toLogin(event);
-
-        // Assert that the window title is set to "Hello!" after navigating to login screen
-        assertTrue(registerController.tfUsername.getScene().getWindow().getTitle().equals("Hello!"));
+        assertTrue(registerController.tfUsername.getScene().getWindow().getScene().getWindow().getTitle().equals("Hello!"));
     }
     @Test
     public void testCount() {
