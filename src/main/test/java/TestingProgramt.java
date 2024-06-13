@@ -1,4 +1,6 @@
-import com.example.keuanganmahasiswa.DatabaseConnection;
+import com.example.keuanganmahasiswa.model.Transaksi;
+import com.example.keuanganmahasiswa.RuntimeConfiguration;
+import com.example.keuanganmahasiswa.MainApplication;
 import com.example.keuanganmahasiswa.model.Transaksi;
 import com.example.keuanganmahasiswa.RuntimeConfiguration;
 import com.example.keuanganmahasiswa.MainApplication;
@@ -363,5 +365,78 @@ public class TestingProgramt {
 
         Mockito.verify(properties).load(fileInputStream);
         Assertions.assertEquals(loginId, result);
+    }
+    private RegisterController registerController;
+  
+    private Window window;
+    private FXMLLoader fxmlLoader;
+    private Scene scene;
+    private Stage stage;
+
+    @BeforeEach
+    // testing regiter
+    public void setupRs() {
+        registerController = new RegisterController();
+        db = Mockito.mock(DatabaseConnection.class);
+        connection = Mockito.mock(Connection.class);
+        statement = Mockito.mock(PreparedStatement.class);
+        window = Mockito.mock(Window.class);
+        fxmlLoader = Mockito.mock(FXMLLoader.class);
+        scene = Mockito.mock(Scene.class);
+        stage = Mockito.mock(Stage.class);
+
+        Mockito.when(db.getConnection()).thenReturn(connection);
+    }
+
+    @Test
+    public void testRegister() throws IOException {
+        ActionEvent event = Mockito.mock(ActionEvent.class);
+        String nim = "123456";
+        String username = "john";
+        String nama = "John Doe";
+        String password = "password";
+        String query = "INSERT INTO users (nim,username,nama,password) values (?,?,?,?)";
+
+        Mockito.when(connection.prepareStatement(query)).thenReturn(statement);
+
+        registerController.setDatabaseConnection(db);
+        registerController.setTfNIM(Mockito.mock(TextField.class));
+        registerController.setTfUsername(Mockito.mock(TextField.class));
+        registerController.setTfNama(Mockito.mock(TextField.class));
+        registerController.setPfPassword(Mockito.mock(PasswordField.class));
+
+        registerController.register(event);
+
+        Mockito.verify(statement).setString(1, nim);
+        Mockito.verify(statement).setString(2, username);
+        Mockito.verify(statement).setString(3, nama);
+        Mockito.verify(statement).setString(4, password);
+        Mockito.verify(statement).executeUpdate();
+        Mockito.verify(registerController.getTfNama()).setText("");
+        Mockito.verify(registerController.getTfUsername()).setText("");
+        Mockito.verify(registerController.getPfPassword()).setText("");
+        Mockito.verify(registerController.getTfNIM()).setText("");
+    }
+
+    @Test
+    public void testToLogin() throws IOException {
+        ActionEvent event = Mockito.mock(ActionEvent.class);
+
+        Mockito.when(registerController.getTfUsername()).thenReturn(Mockito.mock(TextField.class));
+        Mockito.when(registerController.getTfUsername().getScene()).thenReturn(scene);
+        Mockito.when(registerController.getTfUsername().getScene().getWindow()).thenReturn(window);
+        Mockito.when(MainApplication.class.getResource("login.fxml")).thenReturn(Mockito.mock(URL.class));
+        Mockito.when(fxmlLoader.load()).thenReturn(Mockito.mock(Parent.class));
+        Mockito.when(window.getWindow()).thenReturn(stage);
+
+        registerController.setFXMLLoader(fxmlLoader);
+
+        registerController.toLogin(event);
+
+        Mockito.verify(registerController.getTfUsername().getScene().getWindow()).hide();
+        Mockito.verify(fxmlLoader).getResource("login.fxml");
+        Mockito.verify(stage).setTitle("Hello!");
+        Mockito.verify(stage).setScene(scene);
+        Mockito.verify(stage).show();
     }
 }
