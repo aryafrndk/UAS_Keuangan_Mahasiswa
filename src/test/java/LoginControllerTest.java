@@ -25,6 +25,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import org.junit.jupiter.api.Test;
 
@@ -118,7 +119,8 @@ public class LoginControllerTest {
     public void testToLogin() {
         ActionEvent event = Mockito.mock(ActionEvent.class);
         registerController.toLogin(event);
-        assertTrue(registerController.tfUsername.getScene().getWindow().getScene().getWindow().getTitle().equals("Hello!"));
+        Stage stage = (Stage) registerController.tfUsername.getScene().getWindow();
+        assertTrue(stage.getTitle().equals("Hello!"));
     }
     @Test
     public void testCount() {
