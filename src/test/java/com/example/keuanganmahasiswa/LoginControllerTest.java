@@ -1,4 +1,4 @@
-package com.keuanganmahasiswa;
+package com.example.keuanganmahasiswa;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
