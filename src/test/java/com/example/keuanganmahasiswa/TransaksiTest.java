@@ -41,11 +41,12 @@
 
         @Test
         public void testGetConnection_Failure() {
+            Connection connection = null;
             try {
-                Connection connection = databaseConnection.getConnection();
+                connection = databaseConnection.getConnection();
                 assertNull(connection); // Expecting null due to exception in DatabaseConnection
             } catch (Exception e) {
-                // Exception is expected due to connection failure in DatabaseConnection
+                assertNull(connection); // Ensure connection is null on exception
             }
         }
 
