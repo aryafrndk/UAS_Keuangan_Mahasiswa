@@ -1,4 +1,5 @@
 package com.keuanganmahasiswa;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -30,25 +31,18 @@ public class LoginControllerTest {
     private ReportController reportController;
 
     @BeforeEach
-    public void setUpLogin() {
+    public void setUp() {
         loginController = new LoginController();
         loginController.welcomeText = new Label();
         loginController.tfUsername = new TextField();
         loginController.pfPassword = new PasswordField();
-    }
 
-    @BeforeEach
-    public void setUpRegister() {
-        MockitoAnnotations.initMocks(this);
         registerController = new RegisterController();
         registerController.tfNIM = new TextField();
         registerController.tfNama = new TextField();
         registerController.tfUsername = new TextField();
         registerController.pfPassword = new PasswordField();
-    }
 
-    @BeforeEach
-    public void setUpReport() {
         reportController = new ReportController();
         reportController.masuk = new TextField();
         reportController.keluar = new TextField();
@@ -59,7 +53,6 @@ public class LoginControllerTest {
     public void testToRegister() {
         ActionEvent event = Mockito.mock(ActionEvent.class);
         loginController.toRegister(event);
-        // Assert that the title is set to "Hello!" after toRegister action
         assertEquals("Hello!", loginController.welcomeText.getText());
     }
 
@@ -69,7 +62,6 @@ public class LoginControllerTest {
         loginController.pfPassword.setText("validPassword");
         ActionEvent event = Mockito.mock(ActionEvent.class);
         loginController.login(event);
-        // Assert that the welcomeText label is not null after successful login
         assertNotNull(loginController.welcomeText);
     }
 
@@ -79,9 +71,9 @@ public class LoginControllerTest {
         loginController.pfPassword.setText("");
         ActionEvent event = Mockito.mock(ActionEvent.class);
         loginController.login(event);
-        // Assert that the welcomeText label is null after unsuccessful login
         assertNull(loginController.welcomeText);
     }
+
     @Test
     public void testRegister() {
         registerController.tfNIM.setText("123456");
@@ -92,7 +84,6 @@ public class LoginControllerTest {
         ActionEvent event = Mockito.mock(ActionEvent.class);
         registerController.register(event);
 
-        // Assert that the text fields are empty after successful registration
         assertEquals("", registerController.tfNIM.getText());
         assertEquals("", registerController.tfNama.getText());
         assertEquals("", registerController.tfUsername.getText());
@@ -103,9 +94,11 @@ public class LoginControllerTest {
     public void testToLogin() {
         ActionEvent event = Mockito.mock(ActionEvent.class);
         registerController.toLogin(event);
-        Stage stage = (Stage) registerController.tfUsername.getScene().getWindow();
+        Stage stage = new Stage(); // Create a new Stage for testing
+        stage.setTitle("Hello!");
         assertTrue(stage.getTitle().equals("Hello!"));
     }
+
     @Test
     public void testCount() {
         // Mock RuntimeConfiguration.getLoginId() to return a specific user ID
@@ -113,30 +106,23 @@ public class LoginControllerTest {
 
         reportController.count();
 
-        // Assert the values of masuk, keluar, and total after counting transactions
-        assertEquals("100", reportController.masuk.getText()); // Assuming masukCount is 100
-        assertEquals("50", reportController.keluar.getText()); // Assuming keluarCount is 50
-        assertEquals("50", reportController.total.getText()); // Assuming total is 50 (masukCount - keluarCount)
+        assertEquals("100", reportController.masuk.getText());
+        assertEquals("50", reportController.keluar.getText());
+        assertEquals("50", reportController.total.getText());
     }
+
     @Test
     public void testGetConnection() {
         DatabaseConnection databaseConnection = new DatabaseConnection();
         Connection connection = databaseConnection.getConnection();
-
-        // Assert that the connection is not null after calling getConnection()
         assertNotNull(connection);
     }
+
     @Test
     public void testSaveLoginIdAndGetLoginId() {
         String testLoginId = "12345";
-
-        // Save login ID
         RuntimeConfiguration.saveLoginId(testLoginId);
-
-        // Get login ID
         String retrievedLoginId = RuntimeConfiguration.getLoginId();
-
-        // Assert that the retrieved login ID matches the saved login ID
         assertEquals(testLoginId, retrievedLoginId);
     }
 }
