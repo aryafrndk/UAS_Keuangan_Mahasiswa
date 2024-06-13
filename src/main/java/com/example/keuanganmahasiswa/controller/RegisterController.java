@@ -12,6 +12,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.io.IOException;
 import java.net.URL;
@@ -66,5 +69,15 @@ public class RegisterController implements Initializable {
         } catch ( IOException e) {
             e.printStackTrace();
         }
+    }
+    @Test
+    public void testToRegister() {
+        LoginController loginController = new LoginController();
+        ActionEvent event = Mockito.mock(ActionEvent.class);
+
+        loginController.toRegister(event);
+
+     
+        Assertions.assertNotNull(loginController);
     }
 }
