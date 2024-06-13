@@ -1,15 +1,4 @@
-package com.example.keuanganmahasiswa.test;
-
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
-import com.example.keuanganmahasiswa.DatabaseConnection;
-import com.example.keuanganmahasiswa.RuntimeConfiguration;
-import com.example.keuanganmahasiswa.controller.LoginController;
-import com.example.keuanganmahasiswa.controller.RegisterController;
-
+package com.keuanganmahasiswa;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -27,13 +16,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import org.junit.jupiter.api.Test;
-
 import java.sql.Connection;
-
-
-
-
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -53,9 +36,9 @@ public class LoginControllerTest {
         loginController.tfUsername = new TextField();
         loginController.pfPassword = new PasswordField();
     }
-  
+
     @BeforeEach
-    public void setUpregister() {
+    public void setUpRegister() {
         MockitoAnnotations.initMocks(this);
         registerController = new RegisterController();
         registerController.tfNIM = new TextField();
@@ -63,6 +46,7 @@ public class LoginControllerTest {
         registerController.tfUsername = new TextField();
         registerController.pfPassword = new PasswordField();
     }
+
     @BeforeEach
     public void setUpReport() {
         reportController = new ReportController();
