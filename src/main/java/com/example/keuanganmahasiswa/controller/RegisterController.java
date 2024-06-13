@@ -22,9 +22,9 @@ import java.util.ResourceBundle;
 
 public class RegisterController implements Initializable {
     @FXML
-    private PasswordField pfPassword;
+    public PasswordField pfPassword;
     @FXML
-    private TextField tfNIM,tfNama,tfUsername;
+    public TextField tfNIM,tfNama,tfUsername;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

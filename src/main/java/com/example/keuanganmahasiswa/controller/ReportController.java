@@ -23,13 +23,13 @@ public class ReportController implements Initializable {
     DatabaseConnection db = new DatabaseConnection();
     Connection connection = db.getConnection();
     @FXML
-    TextField masuk,keluar,total;
+    public TextField masuk,keluar,total;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         count();
     }
 
-    private void count() {
+    public void count() {
         String query = "select * from transaksi where user_id="+ RuntimeConfiguration.getLoginId();
         int masukCount = 0;
         int keluarCount = 0;
