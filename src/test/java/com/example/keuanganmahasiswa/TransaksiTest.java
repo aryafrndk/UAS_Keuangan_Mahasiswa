@@ -4,6 +4,16 @@ import org.junit.jupiter.api.Test;
 import com.example.keuanganmahasiswa.model.Transaksi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+
+import org.mockito.Mockito;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 public class TransaksiTest {
@@ -12,6 +22,32 @@ public class TransaksiTest {
     public void testGetId() {
         Transaksi transaksi = new Transaksi(1, 123, 1000, "Pemasukan");
         assertEquals(1, transaksi.getId());
+    }
+    private DatabaseConnection databaseConnection;
+
+    @BeforeEach
+    public void setUp() {
+        databaseConnection = new DatabaseConnection();
+    }
+
+    @Test
+    public void testGetConnection_Success() throws SQLException {
+        Connection mockConnection = Mockito.mock(Connection.class);
+        Mockito.when(DriverManager.getConnection(Mockito.anyString(), Mockito.anyString(), Mockito.anyString())).thenReturn(mockConnection);
+
+        Connection connection = databaseConnection.getConnection();
+
+        assertNotNull(connection);
+    }
+
+    @Test
+    public void testGetConnection_Failure() {
+        try {
+            Connection connection = databaseConnection.getConnection();
+            assertNull(connection); // Expecting null due to exception in DatabaseConnection
+        } catch (Exception e) {
+            // Exception is expected due to connection failure in DatabaseConnection
+        }
     }
 
     @Test
